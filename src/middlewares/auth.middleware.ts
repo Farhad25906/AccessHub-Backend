@@ -8,9 +8,14 @@ const auth = (...requiredRoles: string[]) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
       // Get authorization token
-      const token = req.headers.authorization;
+      let token = req.headers.authorization;
       if (!token) {
         throw { statusCode: httpStatus.UNAUTHORIZED, message: 'You are not authorized' };
+      }
+
+      // Handle Bearer prefix
+      if (token.startsWith('Bearer ')) {
+        token = token.split(' ')[1];
       }
 
       // Verify token

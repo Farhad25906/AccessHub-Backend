@@ -12,10 +12,11 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
   const { refreshToken, accessToken, permissions } = result;
 
   // Set refresh token in cookie
+  const isProduction = process.env.NODE_ENV === 'production';
   const cookieOptions: any = {
-    secure: config.env === 'production',
+    secure: true, // Always true for Vercel/HTTPS
     httpOnly: true,
-    sameSite: config.env === 'production' ? 'none' : 'lax',
+    sameSite: isProduction ? 'none' : 'lax', // Must be 'none' for cross-site (+ secure: true)
     path: '/'
   };
 
