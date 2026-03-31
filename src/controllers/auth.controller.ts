@@ -12,9 +12,11 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
   const { refreshToken, accessToken, permissions } = result;
 
   // Set refresh token in cookie
-  const cookieOptions = {
+  const cookieOptions: any = {
     secure: config.env === 'production',
     httpOnly: true,
+    sameSite: config.env === 'production' ? 'none' : 'lax',
+    path: '/'
   };
 
   res.cookie('refreshToken', refreshToken, cookieOptions);
@@ -40,7 +42,12 @@ const refreshToken = catchAsync(async (req: Request, res: Response) => {
 });
 
 const logoutUser = catchAsync(async (req: Request, res: Response) => {
-  res.clearCookie('refreshToken');
+  res.clearCookie('refreshToken', {
+    secure: config.env === 'production',
+    httpOnly: true,
+    sameSite: config.env === 'production' ? 'none' : 'lax',
+    path: '/'
+  });
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
