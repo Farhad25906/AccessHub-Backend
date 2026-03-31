@@ -7,11 +7,18 @@ import routes from './routes';
 const app: Application = express();
 
 app.use(cors({
-  origin: [
-    'https://access-hub-frontend.vercel.app/',
-    'https://access-hub-frontend-farhad25906s-projects.vercel.app', // Common Vercel pattern
-    'http://localhost:3000'
-  ],
+  origin: (origin, callback) => {
+    const allowedSubdomains = [
+      'https://access-hub-frontend.vercel.app',
+      'http://localhost:3000'
+    ];
+    // Allow if origin matches or is a Vercel preview URL related to this project
+    if (!origin || allowedSubdomains.includes(origin) || origin.includes('access-hub-frontend') && origin.includes('vercel.app')) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
