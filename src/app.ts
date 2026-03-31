@@ -7,7 +7,7 @@ import routes from './routes';
 const app: Application = express();
 
 app.use(cors({
-  origin: true,
+  origin: 'https://access-hub-frontend.vercel.app',
   credentials: true
 }));
 
@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req: Request, res: Response) => {
   res.send({
-    message: 'RBAC System API is running'
+    message: 'AccessHub System API is running'
   });
 });
 
