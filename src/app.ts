@@ -6,14 +6,17 @@ import routes from './routes';
 
 const app: Application = express();
 
+// Trust proxy is required for secure cookies on Vercel
+app.set('trust proxy', 1);
+
 app.use(cors({
   origin: (origin, callback) => {
-    const allowedSubdomains = [
+    // In production, allow the frontend URL. In dev, allow localhost.
+    const allowedOrigins = [
       'https://access-hub-frontend.vercel.app',
       'http://localhost:3000'
     ];
-    // Allow if origin matches or is a Vercel preview URL related to this project
-    if (!origin || allowedSubdomains.includes(origin) || origin.includes('access-hub-frontend') && origin.includes('vercel.app')) {
+    if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
@@ -21,7 +24,7 @@ app.use(cors({
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Cookie']
 }));
 
 app.use(cookieParser());

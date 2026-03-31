@@ -58,7 +58,12 @@ Secure, permission-driven Role-Based Access Control (RBAC) system backend.
    npm run dev
    ```
 
-## 🔐 API Endpoints Summary
+## 🔐 Default Credentials (Post-Seed)
+- **Admin**: `admin@example.com` / `admin123`
+- **Manager**: `manager@example.com` / `manager123`
+- **Agent**: `agent@example.com` / `agent123`
+
+## 🏁 API Endpoints Summary
 
 - **Auth**:
   - `POST /api/auth/login` (Login & get Refresh Cookie)
