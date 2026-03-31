@@ -17,7 +17,8 @@ export async function seedDatabase() {
   // 1. Create Permissions
   const permissions = [
     'view_users', 'create_users', 'edit_users', 'delete_users',
-    'view_reports', 'manage_tasks', 'view_audit_logs'
+    'view_reports', 'manage_tasks', 'create_tasks', 'edit_tasks', 'delete_tasks', 'view_tasks',
+    'view_audit_logs', 'manage_settings', 'access_customer_portal', 'view_dashboard'
   ];
 
   const createdPermissions = await Promise.all(

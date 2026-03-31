@@ -5,7 +5,9 @@ import checkPermission from '../middlewares/permission.middleware';
 
 const router = express.Router();
 
-router.post('/assign', auth(), checkPermission('edit_users'), PermissionController.assignPermission);
-router.delete('/remove', auth(), checkPermission('edit_users'), PermissionController.removePermission);
+router.get('/', auth(), checkPermission('view_users'), PermissionController.getAllPermissions);
+router.get('/user/:userId', auth(), checkPermission('view_users'), PermissionController.getUserPermissions);
+router.post('/assign', auth(), checkPermission('edit_users'), PermissionController.assignPermissions);
+router.post('/remove', auth(), checkPermission('edit_users'), PermissionController.removePermissions);
 
 export const PermissionRoutes = router;
